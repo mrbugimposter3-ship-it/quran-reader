@@ -1,0 +1,274 @@
+/* ---------- Green Quran theme ---------- */
+:root {
+  --green-900: #04120c;
+  --green-800: #07271b;
+  --green-700: #0b3d2a;
+  --green-600: #0f5136;
+  --green-500: #157347;
+  --green-400: #1d9762;
+  --green-300: #34d399;
+  --gold: #d4af37;
+  --arabic-size: 60px;
+  font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+}
+
+:root[data-theme='dark'] {
+  --bg: var(--green-900);
+  --bg-soft: var(--green-800);
+  --bg-card: #0a2e20;
+  --text: #d7e8de;
+  --text-soft: #9fc3b2;
+  --text-ar: #f4faf6;
+  --border: #14503a;
+  --accent: var(--green-300);
+  --accent-ink: #052e1f;
+  --shadow: rgba(0, 0, 0, 0.45);
+}
+
+:root[data-theme='light'] {
+  --bg: #eef6f0;
+  --bg-soft: #e2efe7;
+  --bg-card: #ffffff;
+  --text: #173a2b;
+  --text-soft: #4a7261;
+  --text-ar: #0b2e1f;
+  --border: #bcd8c8;
+  --accent: var(--green-600);
+  --accent-ink: #ffffff;
+  --shadow: rgba(11, 61, 42, 0.18);
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+  color: var(--text);
+}
+
+.app { min-height: 100vh; display: flex; flex-direction: column; }
+
+/* ---------- Header ---------- */
+.appbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 20px;
+  background: linear-gradient(135deg, var(--green-700), var(--green-600));
+  color: #eafaf1;
+  box-shadow: 0 2px 12px var(--shadow);
+}
+
+.brand { display: flex; flex-direction: column; }
+.brand-ar { font-family: 'Amiri Quran', 'Amiri', serif; font-size: 1.9rem; line-height: 1.2; color: #fff; }
+.brand-sub { font-size: 0.8rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); }
+
+.fab-play {
+  width: 58px; height: 58px;
+  border-radius: 50%;
+  border: none;
+  font-size: 1.3rem;
+  cursor: pointer;
+  background: var(--gold);
+  color: #3a2f06;
+  box-shadow: 0 4px 14px var(--shadow);
+  transition: transform 0.15s ease, background 0.2s ease;
+}
+.fab-play:hover { transform: scale(1.06); }
+.fab-play.playing { background: var(--green-300); color: var(--green-900); animation: pulse 2s infinite; }
+@keyframes pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(52, 211, 153, 0.5); }
+  50% { box-shadow: 0 0 0 12px rgba(52, 211, 153, 0); }
+}
+
+/* ---------- Toolbar ---------- */
+.toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 16px;
+  background: color-mix(in srgb, var(--bg-soft) 92%, transparent);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--border);
+}
+
+.seg { display: flex; border: 1px solid var(--border); border-radius: 10px; overflow: hidden; }
+.seg button {
+  border: none; background: transparent; color: var(--text-soft);
+  padding: 8px 16px; cursor: pointer; font-size: 0.9rem; font-weight: 600;
+}
+.seg button.active { background: var(--green-500); color: #fff; }
+
+.picker { display: flex; align-items: center; gap: 6px; flex: 1 1 auto; min-width: 220px; max-width: 460px; }
+.picker select {
+  flex: 1;
+  padding: 9px 12px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--bg-card);
+  color: var(--text);
+  font-size: 0.95rem;
+}
+.nav {
+  border: 1px solid var(--border);
+  background: var(--bg-card);
+  color: var(--accent);
+  border-radius: 10px;
+  width: 38px; height: 38px;
+  font-size: 1.3rem; line-height: 1;
+  cursor: pointer;
+}
+.nav:hover { background: var(--green-600); color: #fff; }
+
+.chips { display: flex; gap: 6px; flex-wrap: wrap; }
+.chip {
+  border: 1px solid var(--border);
+  background: var(--bg-card);
+  color: var(--text-soft);
+  border-radius: 999px;
+  padding: 7px 14px;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+.chip.on { background: var(--green-500); border-color: var(--green-500); color: #fff; }
+
+.gear {
+  border: 1px solid var(--border);
+  background: var(--bg-card);
+  color: var(--text);
+  border-radius: 10px;
+  width: 40px; height: 40px;
+  font-size: 1.15rem;
+  cursor: pointer;
+}
+.gear:hover { background: var(--green-600); color: #fff; }
+
+/* ---------- Settings panel ---------- */
+.settings {
+  position: sticky;
+  top: 58px;
+  z-index: 19;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px 20px;
+  background: var(--bg-card);
+  border-bottom: 1px solid var(--border);
+  box-shadow: 0 6px 18px var(--shadow);
+}
+.slider-row { display: flex; flex-direction: column; gap: 6px; font-size: 0.9rem; color: var(--text-soft); }
+.slider-row b { color: var(--accent); }
+.slider-row input[type='range'] { width: 100%; accent-color: var(--green-400); height: 28px; }
+.check-row { display: flex; align-items: center; gap: 10px; font-size: 0.9rem; color: var(--text); }
+.check-row input { width: 18px; height: 18px; accent-color: var(--green-500); }
+
+/* ---------- Content ---------- */
+.content {
+  flex: 1;
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 24px clamp(14px, 4vw, 48px) 80px;
+}
+
+.status { text-align: center; padding: 60px 0; color: var(--text-soft); font-size: 1.05rem; }
+.status.error { color: #e08a8a; }
+.status .retry {
+  background: var(--green-500); color: #fff; border: none;
+  padding: 8px 22px; border-radius: 8px; cursor: pointer; font-size: 0.95rem;
+}
+.status.end { padding: 40px 0 20px; font-style: italic; }
+
+.surah-head {
+  display: flex; flex-direction: column; align-items: center; gap: 4px;
+  margin: 34px 0 10px;
+  padding: 18px;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: linear-gradient(160deg, var(--green-700), var(--green-600));
+  color: #fff;
+}
+.surah-name-ar { font-family: 'Amiri Quran', 'Amiri', serif; font-size: 2rem; }
+.surah-name-en { font-size: 0.85rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold); }
+
+.bismillah {
+  font-family: 'Amiri Quran', 'Amiri', serif;
+  text-align: center;
+  font-size: calc(var(--arabic-size) * 0.75);
+  color: var(--gold);
+  margin: 26px 0 10px;
+}
+
+.ayah {
+  margin: 18px 0;
+  padding: 18px clamp(12px, 3vw, 28px);
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+}
+
+.ayah .ar {
+  font-family: 'Amiri Quran', 'Amiri', 'Scheherazade New', serif;
+  font-size: var(--arabic-size);
+  line-height: 2;
+  color: var(--text-ar);
+  margin: 0 0 10px;
+  text-align: right;
+}
+.ayah-num { color: var(--accent); font-size: 0.62em; white-space: nowrap; }
+
+.ayah .tr {
+  font-size: calc(var(--arabic-size) * 0.4);
+  font-style: italic;
+  color: var(--text-soft);
+  line-height: 1.7;
+  margin: 8px 0;
+}
+.ayah .ur {
+  font-family: 'Noto Nastaliq Urdu', 'Jameel Noori Nastaleeq', serif;
+  font-size: calc(var(--arabic-size) * 0.5);
+  line-height: 2.4;
+  color: var(--text-ar);
+  margin: 8px 0;
+  text-align: right;
+}
+.ayah .en {
+  font-size: calc(var(--arabic-size) * 0.38);
+  line-height: 1.75;
+  color: var(--text);
+  margin: 8px 0 0;
+}
+
+.footer {
+  padding: 18px;
+  text-align: center;
+  font-size: 0.78rem;
+  color: var(--text-soft);
+  border-top: 1px solid var(--border);
+}
+.footer a { color: var(--accent); }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 768px) { /* iPad portrait & smaller */
+  .brand-ar { font-size: 1.5rem; }
+  .content { padding-bottom: 120px; }
+}
+
+@media (max-width: 480px) { /* phones */
+  .appbar { padding: 10px 14px; }
+  .fab-play { width: 50px; height: 50px; }
+  .toolbar { gap: 8px; padding: 8px 10px; }
+  .picker { min-width: 100%; order: 3; max-width: none; }
+  .chip { padding: 6px 11px; font-size: 0.78rem; }
+  .settings { top: 100px; }
+  .ayah .ar { line-height: 1.9; }
+}
+
+@media (min-width: 1400px) { /* large monitors */
+  .content { max-width: 1240px; }
+}
