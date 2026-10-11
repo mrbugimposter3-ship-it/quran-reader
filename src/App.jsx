@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { SURAHS, AYAH_PER_JUZ } from './surahMeta.js';
 import { fetchSurah, fetchJuz, prefetchSurah } from './quranApi.js';
+import { toHieroglyphs } from './hieroglyphs.js';
 
 const BISMILLAH = 'بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ';
 
@@ -29,7 +30,7 @@ export default function App() {
   const [playing, setPlaying] = useState(false);
   const [continuous, setContinuous] = useState(() => load('qr.continuous', true));
   const [theme, setTheme] = useState(() => load('qr.theme', 'dark'));
-  const [layers, setLayers] = useState(() => load('qr.layers', { ar: true, tr: true, ur: true, en: true }));
+  const [layers, setLayers] = useState(() => ({ hg: true, ar: true, tr: true, ur: true, en: true, ...load('qr.layers', {}) }));
   const [showSettings, setShowSettings] = useState(false);
 
   const contentRef = useRef(null);
@@ -205,6 +206,7 @@ export default function App() {
         </div>
 
         <div className="chips">
+          <button className={`chip ${layers.hg ? 'on' : ''}`} onClick={() => toggleLayer('hg')} title="Hieroglyphic transliteration">𓂀 Glyphs</button>
           <button className={`chip ${layers.ar ? 'on' : ''}`} onClick={() => toggleLayer('ar')}>عربي</button>
           <button className={`chip ${layers.tr ? 'on' : ''}`} onClick={() => toggleLayer('tr')}>Translit</button>
           <button className={`chip ${layers.ur ? 'on' : ''}`} onClick={() => toggleLayer('ur')}>اردو</button>
@@ -252,7 +254,10 @@ export default function App() {
               <span className="surah-name-en">Surah {g.surah} · {g.surahName}</span>
             </div>
             {g.surah !== 1 && g.surah !== 9 && g.ayahs[0]?.numberInSurah === 1 && (
-              <p className="bismillah">{BISMILLAH}</p>
+              <>
+                <p className="bismillah">{BISMILLAH}</p>
+                {layers.hg && <p className="hg hg-bismillah" dir="rtl" lang="egy">{toHieroglyphs('بسم الله الرحمن الرحيم')}</p>}
+              </>
             )}
             {g.ayahs.map((a) => (
               <article key={a.number} className="ayah">
@@ -262,6 +267,7 @@ export default function App() {
                     <span className="ayah-num"> ﴿{a.numberInSurah}﴾</span>
                   </p>
                 )}
+                {layers.hg && <p className="hg" dir="rtl" lang="egy" title="Hieroglyphic transliteration (consonantal)">{toHieroglyphs(a.ar)}</p>}
                 {layers.tr && <p className="tr" dir="ltr">{a.tr}</p>}
                 {layers.ur && <p className="ur" dir="rtl" lang="ur">{a.ur}</p>}
                 {layers.en && <p className="en" dir="ltr">{a.en}</p>}

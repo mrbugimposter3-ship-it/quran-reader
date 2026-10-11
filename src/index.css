@@ -222,6 +222,22 @@ html, body {
 }
 .ayah-num { color: var(--accent); font-size: 0.62em; white-space: nowrap; }
 
+.ayah .hg {
+  font-family: 'Noto Sans Egyptian Hieroglyphs', sans-serif;
+  font-size: calc(var(--arabic-size) * 0.8);
+  line-height: 2;
+  color: var(--gold);
+  margin: 8px 0;
+  text-align: right;
+  letter-spacing: 0.06em;
+}
+.hg-bismillah {
+  text-align: center;
+  margin: 0 0 14px;
+  font-size: calc(var(--arabic-size) * 0.6);
+  opacity: 0.9;
+}
+
 .ayah .tr {
   font-size: calc(var(--arabic-size) * 0.4);
   font-style: italic;
